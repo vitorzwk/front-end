@@ -1,5 +1,5 @@
 /* ============================================
-   SaúdeFácil – Gestão de Saúde Ocupacional
+   Paixão e Saúde – Gestão de Saúde Ocupacional
    script.js – Controle de Exames Ocupacionais
 =============================================== */
 

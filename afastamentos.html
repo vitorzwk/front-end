@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Afastamentos e Ações Preventivas</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+<div class="app">
+
+<header>
+    <div>
+        <h1>Afastamentos e Ações Preventivas</h1>
+        <p class="lead">Registre afastamentos, acompanhe prazos e planeje ações preventivas com simplicidade.</p>
+    </div>
+</header>
+
+<main class="grid">
+    
+<!-- FORMULÁRIO LATERAL -->
+<aside class="card">
+    <form id="formAfast" novalidate>
+        <input type="hidden" id="idAfast">
+
+        <div class="field">
+            <label>Nome do Funcionário *</label>
+            <input id="nomeAfast" required placeholder="Ex: João da Silva">
+        </div>
+
+        <div class="field">
+            <label>Motivo do Afastamento *</label>
+            <select id="motivoAfast" required>
+                <option value="">Selecione</option>
+                <option>Doença</option>
+                <option>Acidente</option>
+                <option>Gestante</option>
+                <option>Trabalho repetitivo</option>
+                <option>Outros</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="col field">
+                <label>Data de início *</label>
+                <input id="inicioAfast" type="date" required>
+            </div>
+
+            <div class="col field">
+                <label>Previsão de retorno *</label>
+                <input id="retornoAfast" type="date" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Ação preventiva aplicada</label>
+            <textarea id="acaoPrev" maxlength="200" placeholder="Descrição da ação aplicada..."></textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="reset" class="btn btn-ghost">Limpar</button>
+        </div>
+    </form>
+</aside>
+
+
+
+<!-- TABELA PRINCIPAL -->
+<section class="card">
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Funcionário</th>
+            <th>Motivo</th>
+            <th>Início</th>
+            <th>Retorno</th>
+            <th>Ação Preventiva</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody id="tbodyAfast">
+        <tr class="empty-row">
+            <td class="empty" colspan="6">Nenhum afastamento registrado.</td>
+        </tr>
+    </tbody>
+</table>
+
+</section>
+
+</main>
+
+<footer>
+    <p>© 2025 — Paixão e Saúde</p>
+</footer>
+
+<script>
+let afastamentos = JSON.parse(localStorage.getItem("afastamentos")) || [];
+
+// Salvar local
+function salvar() {
+    localStorage.setItem("afastamentos", JSON.stringify(afastamentos));
+}
+
+// Renderizar tabela
+function render() {
+    const tbody = document.getElementById("tbodyAfast");
+    tbody.innerHTML = "";
+
+    if (afastamentos.length === 0) {
+        tbody.innerHTML = `
+            <tr class="empty-row">
+                <td class="empty" colspan="6">Nenhum afastamento registrado.</td>
+            </tr>
+        `;
+        return;
+    }
+
+    afastamentos.forEach((a, i) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${a.nome}</td>
+            <td>${a.motivo}</td>
+            <td>${a.inicio}</td>
+            <td>${a.retorno}</td>
+            <td>${a.acao}</td>
+            <td>
+                <button class="btn btn-primary" onclick="editar(${i})">Editar</button>
+                <button class="btn btn-ghost" onclick="excluir(${i})">Excluir</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+document.getElementById("formAfast").onsubmit = (e) => {
+    e.preventDefault();
+
+    const id = document.getElementById("idAfast").value;
+
+    const registro = {
+        nome: document.getElementById("nomeAfast").value,
+        motivo: document.getElementById("motivoAfast").value,
+        inicio: document.getElementById("inicioAfast").value,
+        retorno: document.getElementById("retornoAfast").value,
+        acao: document.getElementById("acaoPrev").value
+    };
+
+    if (id) afastamentos[id] = registro;
+    else afastamentos.push(registro);
+
+    salvar();
+    render();
+
+    document.getElementById("formAfast").reset();
+    document.getElementById("idAfast").value = "";
+};
+
+function editar(i) {
+    const a = afastamentos[i];
+
+    document.getElementById("idAfast").value = i;
+    document.getElementById("nomeAfast").value = a.nome;
+    document.getElementById("motivoAfast").value = a.motivo;
+    document.getElementById("inicioAfast").value = a.inicio;
+    document.getElementById("retornoAfast").value = a.retorno;
+    document.getElementById("acaoPrev").value = a.acao;
+}
+
+function excluir(i) {
+    if (confirm("Deseja remover este registro?")) {
+        afastamentos.splice(i, 1);
+        salvar();
+        render();
+    }
+}
+
+render();
+</script>
+
+</body>
+</html>

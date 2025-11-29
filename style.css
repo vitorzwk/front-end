@@ -22,7 +22,7 @@ overflow: hidden;
 }
 /* ======= CABEÇALHO ======= */
 header {
-background: linear-gradient(135deg, #BA55D3, #A020F0);
+background: linear-gradient(135deg, #A020F0, #A020F0);
 color: #fff;
 padding: 25px 30px;
 display: flex;
@@ -51,7 +51,7 @@ transition: 0.2s ease;
 font-weight: 500;
 }
 .btn-primary {
-background: #ed42f3;
+background: #b410b9;
 color: #fff;
 }
 .btn-primary:hover {

@@ -41,7 +41,34 @@ header {
   flex-wrap: wrap;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
+@media (max-width: 768px) {
+  header {
+    flex-direction: column; /* Empilha verticalmente */
+    align-items: flex-start;
+    gap: 1rem; /* Espaço entre título e botões */
+    padding: 1rem; /* Reduz padding no mobile */
+  }
+  
+  header h1 {
+    font-size: 1.5rem; /* Reduz tamanho do título */
+  }
+  
+  .lead {
+    font-size: 0.85rem; /* Reduz texto menor */
+    max-width: 100%; /* Ocupa toda largura */
+  }
+  
+  .controls {
+    width: 100%; /* Botões ocupam largura total */
+    justify-content: flex-start; /* Alinha à esquerda */
+    gap: 0.5rem; /* Reduz espaço entre botões */
+  }
+  
+  .btn {
+    padding: 0.5rem 0.8rem; /* Botões menores */
+    font-size: 0.8rem;
+  }
+}
 header h1 {
   font-size: 1.8rem;
   font-weight: 600;
@@ -242,7 +269,12 @@ footer {
   padding: 1.5rem;
   margin-top: auto;
 }
-
+@media (max-width: 768px) {
+  footer {
+    padding: 1rem; /* Reduz padding */
+    font-size: 0.85rem; /* Texto menor */
+  }
+}
 /* ===== USUÁRIOS ===== */
 .user-section {
   margin-bottom: 2rem;

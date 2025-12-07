@@ -53,7 +53,11 @@ function atualizarTabela() {
             (filtro === "" || ex.tipo === filtro)
         );
 
-    // Ordenação
+    // Ordenação; O método .sort() recebe uma função de comparação;
+    //Por que new Date()?: Converte strings como "2024-01-15" em objetos Date que podem ser subtraídos, resultando em milissegundos.
+    //a → Um item individual do array
+    //→ .data → A propriedade chamada "data" dentro desse objeto (a.data)
+    
     if (sortBy.value === "date_desc") {
         lista.sort((a,b) => new Date(b.data) - new Date(a.data));
     } else if (sortBy.value === "date_asc") {
@@ -67,7 +71,8 @@ function atualizarTabela() {
     // Montar linhas
     lista.forEach((ex, i) => {
         const tr = document.createElement("tr");
-
+    //Isso está criando conteúdo HTML dinamicamente dentro de um elemento <tr> (linha de tabela).
+    //O que é o "$": Marca onde uma expressão JavaScript será inserida dentro da string.
         tr.innerHTML = `
             <td>${ex.nome}</td>
             <td>${ex.cargo}</td>
@@ -89,8 +94,13 @@ function atualizarTabela() {
 
 
 // =========================
-// Atualizar Totais
-// =========================
+// Atualizar Totais ; 
+// Essa função atualiza os números exibidos na interface da tela, mostrando quantos exames foram cadastrados
+// Sempre que eu chamar essa função (function atualizarTotais), execute o código dentro dela.”
+//exames: é uma lista (array) onde todos os exames cadastrados são guardados.
+//.length é uma propriedade do array que diz quantos itens ele tem.
+//Essas duas variáveis (itemsTotal e count) representam elementos HTML que mostram números na tela.
+//textContent: “Troque o texto dentro desse elemento por outro valor.”
 function atualizarTotais() {
     const totalRegistros = exames.length;
     itemsTotal.textContent = totalRegistros;
@@ -100,7 +110,7 @@ function atualizarTotais() {
     total.textContent = `R$ ${soma.toFixed(2)}`;
     grandTotal.textContent = `R$ ${soma.toFixed(2)}`;
 }
-
+//Acima encontra-se os cálculos totais
 
 // =========================
 // Adicionar / Editar Exame
@@ -160,7 +170,7 @@ function excluir(i) {
         atualizarTabela();
     }
 }
-
+//i =  onde começar ; 1 = quantidade para realizar ação
 
 // =========================
 // Importar JSON

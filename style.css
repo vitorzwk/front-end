@@ -185,4 +185,15 @@ width: 100%;
 justify-content: flex-start;
 flex-wrap: wrap;
 }
+ /* ===== NOVA PARA CELULAR (600px) ===== */
+@media (max-width: 600px) {
+  header {
+    padding: 15px;
+  }
+  
+  footer {
+    padding: 12px;
+    font-size: 0.8rem;
+  }
+} /* ⬅️ SEPARADA, fora da outra media query */
 }

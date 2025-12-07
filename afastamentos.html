@@ -163,7 +163,7 @@ document.getElementById("formAfast").onsubmit = (e) => {
 
 function editar(i) {
     const a = afastamentos[i];
-
+//  ⬇ Cada linha pega uma informação já armazenada e coloca dentro do campo correspondente do formulário.
     document.getElementById("idAfast").value = i;
     document.getElementById("nomeAfast").value = a.nome;
     document.getElementById("motivoAfast").value = a.motivo;
@@ -174,12 +174,12 @@ function editar(i) {
 
 function excluir(i) {
     if (confirm("Deseja remover este registro?")) {
-        afastamentos.splice(i, 1);
+        afastamentos.splice(i, 1); //splice: remover um elemento da array, com o indíce i e um de cada.
         salvar();
         render();
     }
 }
-
+//⬇ chave para ligar o sistema 
 render();
 </script>
 

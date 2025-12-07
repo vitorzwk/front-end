@@ -109,7 +109,7 @@ function atualizarTotais() {
     const soma = exames.reduce((acc, ex) => acc + ex.custo, 0);
     total.textContent = `R$ ${soma.toFixed(2)}`;
     grandTotal.textContent = `R$ ${soma.toFixed(2)}`;
-}
+} //`R$ ${soma.toFixed(2)}` → formata o número para duas casas decimais
 //Acima encontra-se os cálculos totais
 
 // =========================
@@ -221,10 +221,11 @@ document.getElementById("btnClear").onclick = () => {
 
 // =========================
 // Filtros dinâmicos
-// =========================
+// q é o campo de pesquisa (search).
+//Quando o usuário digita algo nesse campo, o evento oninput dispara a função atualizarTabela
 q.oninput = atualizarTabela;
-filterCategory.onchange = atualizarTabela;
-sortBy.onchange = atualizarTabela;
+filterCategory.onchange = atualizarTabela; //Filtro de categoria por exame
+sortBy.onchange = atualizarTabela; //ordenar
 
 
 // Inicializar tabela ao carregar a página

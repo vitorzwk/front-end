@@ -172,28 +172,150 @@ color: #e9e4e4;
 }
 /* ======= RESPONSIVIDADE ======= */
 @media (max-width: 900px) {
-main.grid {
-grid-template-columns: 1fr;
-}
-header {
-flex-direction: column;
-align-items: flex-start;
-gap: 15px;
-}
-.controls {
-width: 100%;
-justify-content: flex-start;
-flex-wrap: wrap;
-}
- /* ===== NOVA PARA CELULAR (600px) ===== */
-@media (max-width: 600px) {
+  main.grid {
+    grid-template-columns: 1fr;
+  }
   header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .controls {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+/* ===== TABLET PEQUENO (768px) ===== */
+@media (max-width: 768px) {
+  /* Ajustes gerais */
+  body {
+    padding: 10px; /* Reduz padding do body */
+  }
+  
+  .app {
+    border-radius: 12px; /* Cantos menos arredondados */
+  }
+  
+  /* CABEÇALHO COMPACTO */
+  header {
+    padding: 18px 20px;
+  }
+  
+  header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .lead {
+    font-size: 0.85rem;
+  }
+  
+  .controls {
+    gap: 8px;
+  }
+  
+  .btn {
+    padding: 9px 12px;
+    font-size: 0.85rem;
+  }
+  
+  /* LAYOUT PRINCIPAL */
+  main.grid {
+    padding: 15px;
+    gap: 15px;
+  }
+  
+  .card {
     padding: 15px;
   }
   
+  /* FORMULÁRIO COMPACTO */
+  input, select, textarea {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  
+  /* TABELA COM SCROLL HORIZONTAL */
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .table th, .table td {
+    padding: 8px;
+    white-space: nowrap; /* Não quebra texto */
+  }
+  
+  /* RODAPÉ COMPACTO */
   footer {
     padding: 12px;
     font-size: 0.8rem;
   }
-} /* ⬅️ SEPARADA, fora da outra media query */
+}
+
+/* ===== CELULAR PEQUENO (480px) ===== */
+@media (max-width: 480px) {
+  /* CABEÇALHO SUPER COMPACTO */
+  header {
+    padding: 12px 15px;
+  }
+  
+  header h1 {
+    font-size: 1.2rem;
+  }
+  
+  .lead {
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+  }
+  
+  /* BOTÕES MUITO PEQUENOS */
+  .controls {
+    flex-direction: column; /* Botões empilhados */
+    gap: 6px;
+  }
+  
+  .btn {
+    width: 100%; /* Botões ocupam toda largura */
+    padding: 7px 10px;
+    font-size: 0.75rem;
+    text-align: center;
+  }
+  
+  /* LAYOUT ULTRA COMPACTO */
+  main.grid {
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .card {
+    padding: 12px;
+  }
+  
+  /* FORMULÁRIO ULTRA COMPACTO */
+  .field {
+    margin-bottom: 8px;
+  }
+  
+  input, select, textarea {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+  
+  .row {
+    flex-direction: column; /* Campos empilhados */
+    gap: 8px;
+  }
+  
+  /* TABELA MINI */
+  .table th, .table td {
+    padding: 6px;
+    font-size: 0.8rem;
+  }
+  
+  /* RODAPÉ MINI */
+  footer {
+    padding: 8px;
+    font-size: 0.7rem;
+  }
 }

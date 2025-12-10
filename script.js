@@ -199,7 +199,8 @@ document.getElementById("fileInput").addEventListener("change", (e) => {
 document.getElementById("btnExport").onclick = () => {
     const blob = new Blob([JSON.stringify(exames, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-  
+  //Esse comando cria um link temporário (uma URL) para um arquivo que está guardado na memória 
+  // do navegador — no caso, um blob (arquivo JSON gerado pelo sistema).
     const a = document.createElement("a");
     a.href = url;
     a.download = "exames_ocupacionais.json";

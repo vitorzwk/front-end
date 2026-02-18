@@ -6,17 +6,23 @@
 <title>Afastamentos e Ações Preventivas</title>
 
 <link rel="stylesheet" href="style.css">
-
 </head>
 
-<body>
+<body class="page-enter">
+
 <div class="app">
 
 <header>
-    <div>
-        <h1>Afastamentos e Ações Preventivas</h1>
-        <p class="lead">Registre afastamentos, acompanhe prazos e planeje ações preventivas com simplicidade.</p>
-    </div>
+  <div>
+    <h1>Paixão e Saúde</h1>
+    <p class="lead">Gestão de afastamentos e ações preventivas.</p>
+  </div>
+
+  <nav class="controls">
+    <button onclick="window.location.href='login.html'" class="btn btn-ghost">
+      Voltar
+    </button>
+  </nav>
 </header>
 
 <main class="grid">
@@ -67,29 +73,36 @@
     </form>
 </aside>
 
+<!-- TABELA PRINCIPAL -->
+<section class="card reveal">
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Funcionário</th>
+          <th>Motivo</th>
+          <th>Início</th>
+          <th>Retorno</th>
+          <th>Ação Preventiva</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
 
+      <tbody id="tbodyAfast">
+        <tr class="empty-row">
+          <td class="empty" colspan="6">
+            Nenhum afastamento registrado.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
 <!-- TABELA PRINCIPAL -->
 <section class="card">
+<!--NOVO CODIGO ABAIXO!!!!!!!!!!!!!!-->
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Funcionário</th>
-            <th>Motivo</th>
-            <th>Início</th>
-            <th>Retorno</th>
-            <th>Ação Preventiva</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-
-    <tbody id="tbodyAfast">
-        <tr class="empty-row">
-            <td class="empty" colspan="6">Nenhum afastamento registrado.</td>
-        </tr>
-    </tbody>
-</table>
 
 </section>
 
@@ -100,6 +113,7 @@
 </footer>
 
 <script>
+
 let afastamentos = JSON.parse(localStorage.getItem("afastamentos")) || [];
 
 // Salvar local
@@ -180,8 +194,25 @@ function excluir(i) {
     }
 }
 //⬇ chave para ligar o sistema 
-render();
+render(tr.classList.add("reveal", "active"));
 </script>
+<!--MAIS JAVASCRIPT-->
+<script>
+const reveals = document.querySelectorAll(".reveal");
 
+function revealOnScroll() {
+  const windowHeight = window.innerHeight;
+  
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < windowHeight - 100) {
+      el.classList.add("active");
+    }
+  });
+}
+
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll();
+</script>
 </body>
 </html>

@@ -218,7 +218,39 @@ document.getElementById("btnClear").onclick = () => {
         atualizarTabela();
     }
 };
+//cards e suas animações.
+const reveals = document.querySelectorAll(".reveal");
 
+function revealOnScroll() {
+  const windowHeight = window.innerHeight;
+  
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < windowHeight - 100) {
+      el.classList.add("active");
+    }
+  });
+}
+const counters = document.querySelectorAll(".counter");
+
+counters.forEach(counter => {
+  const update = () => {
+    const target = +counter.dataset.target;
+    const current = +counter.innerText;
+    const increment = target / 100;
+
+    if (current < target) {
+      counter.innerText = Math.ceil(current + increment);
+      setTimeout(update, 20);
+    } else {
+      counter.innerText = target;
+    }
+  };
+  update();
+});
+//SEPARAÇAO
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll();
 
 // =========================
 // Filtros dinâmicos

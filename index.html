@@ -1,174 +1,561 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Paixão e Saúde.</title>
-<!--O :root seleciona o elemento raiz do documento (equivalente a html),
- e ali você define variáveis globais que podem ser usadas em qualquer lugar.Essa variável --radius provavelmente 
- será usada para arredondar cantos; O style importa ua fonte poppins diretamente da internet (google)-->
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paixão e Saúde — Saúde Ocupacional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
-    :root {
-      --bg: linear-gradient(135deg, #06121d 0%, #0a1a2a 100%);
-      --card: rgba(255, 255, 255, 0.06);
-      --accent: #e39cf1;
-      --text: #e5eef7;
-      --muted: #f34feb;
-      --radius: 16px;
-    }
+<style>
+  :root {
+    --bg: #06101a;
+    --surface: rgba(160, 32, 240, 0.06);
+    --accent: #A020F0;
+    --accent2: #e339f5;
+    --text: #e5eef7;
+    --muted: rgba(229,238,247,0.5);
+    --glow: rgba(160,32,240,0.35);
+  }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Poppins, sans-serif; }
+  * { margin:0; padding:0; box-sizing:border-box; }
 
-    body {
-      background: var(--bg);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text);
-    }
+  html { scroll-behavior: smooth; }
 
-    .login-container {
-      width: 100%;
-      max-width: 380px;
-      background: var(--card);
-      padding: 32px;
-      border-radius: var(--radius);
-      text-align: center;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.4);
-      animation: fadeIn 0.8s ease;
-    } 
-/*O key frame cria uma pequena mudança de cor (mais claro) quando o user clica; Na posição original, sem deslocamento.*/
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
 
-    h1 {
-      font-size: 26px;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
 
-    p { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+  /* ── ORBS ── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+    animation: float 8s ease-in-out infinite;
+  }
 
-    .field { text-align: left; margin-bottom: 18px; }
+  .orb-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(160,32,240,0.18) 0%, transparent 70%);
+    top: -100px; left: -100px;
+    animation-delay: 0s;
+  }
 
-    label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 6px; }
+  .orb-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(227,60,245,0.12) 0%, transparent 70%);
+    bottom: 0; right: -80px;
+    animation-delay: 3s;
+  }
 
-    input {
-      width: 100%;
-      padding: 12px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      color: var(--text);
-      font-size: 14px;
-    }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-30px); }
+  }
 
-    input:focus { outline: 1px solid var(--accent); }
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(6,16,26,0.6);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(160,32,240,0.12);
+    animation: slideDown 0.8s ease both;
+  }
 
-    .btn {
-      width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      font-size: 15px;
-      font-weight: 600;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+  @keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+  }
 
-    .btn-primary {
-      background: linear-gradient(90deg, #ff4fff, #ff3ec5);
-      color: #00141a;
-    }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, #e5eef7, var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+  .nav-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: 1px solid rgba(160,32,240,0.3);
+    background: rgba(160,32,240,0.08);
+  }
 
-    .link {
-      margin-top: 18px;
-      font-size: 13px;
-      color: var(--muted);
-    }
+  .nav-link:hover {
+    color: var(--text);
+    background: rgba(160,32,240,0.18);
+    border-color: var(--accent);
+  }
 
-    .link a { color: var(--accent); text-decoration: none; }
-    .link a:hover { text-decoration: underline; }
-  </style>
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 100px;
+    border: 1px solid rgba(160,32,240,0.4);
+    background: rgba(160,32,240,0.1);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--accent2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.3s both;
+  }
+
+  .tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    max-width: 760px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s both;
+  }
+
+  h1 span {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    margin-top: 24px;
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.7;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s both;
+  }
+
+  .hero-cta {
+    margin-top: 44px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s both;
+  }
+
+  .btn-main {
+    padding: 14px 32px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    box-shadow: 0 0 30px var(--glow);
+  }
+
+  .btn-main:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 40px rgba(160,32,240,0.5);
+  }
+
+  .btn-outline {
+    padding: 14px 32px;
+    border-radius: 12px;
+    border: 1px solid rgba(160,32,240,0.35);
+    background: transparent;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .btn-outline:hover {
+    background: rgba(160,32,240,0.1);
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.3s both;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent2), transparent);
+    animation: scrollAnim 2s ease infinite;
+  }
+
+  @keyframes scrollAnim {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* ── FEATURES ── */
+  .section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 16px;
+    opacity: 0;
+    transition: all 0.8s ease;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: -0.03em;
+    margin-bottom: 56px;
+    opacity: 0;
+    transition: all 0.8s ease 0.1s;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .feature-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(160,32,240,0.15);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.35s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    cursor: default;
+  }
+
+  .feature-card.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .feature-card:hover {
+    background: rgba(160,32,240,0.08);
+    border-color: rgba(160,32,240,0.35);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(160,32,240,0.15);
+  }
+
+  .feature-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(160,32,240,0.2), rgba(227,60,245,0.15));
+    border: 1px solid rgba(160,32,240,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+  }
+
+  .feature-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .feature-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    position: relative;
+    z-index: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(160,32,240,0.3), transparent);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  /* ── CTA BOTTOM ── */
+  .cta-section {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 80px 40px 100px;
+  }
+
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 14px;
+    opacity: 0;
+    transition: all 0.8s ease;
+  }
+
+  .cta-section p {
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 36px;
+    opacity: 0;
+    transition: all 0.8s ease 0.1s;
+  }
+
+  .cta-section .btn-main {
+    opacity: 0;
+    transition: all 0.8s ease 0.2s;
+  }
+
+  .cta-section.active h2,
+  .cta-section.active p,
+  .cta-section.active .btn-main,
+  .section-label.active,
+  .section-title.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    background: rgba(0,0,0,0.4);
+    border-top: 1px solid rgba(160,32,240,0.12);
+    padding: 20px 40px;
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 16px 20px; }
+    .hero { padding: 110px 24px 80px; }
+    .section { padding: 60px 20px; }
+    .cta-section { padding: 60px 20px 80px; }
+    footer { padding: 16px 20px; }
+  }
+</style>
 </head>
 <body>
 
-  <div class="login-container">
-    <h1>Paixão e Saúde.</h1>
-    <p>Gerencie exames e funcionários com segurança e paixão.</p>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
 
-    <form id="loginForm">
-      <div class="field">
-        <label for="email">Email</label>
-        <input id="email" type="email" placeholder="seuemail@empresa.com" required />
-      </div>
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Paixão e Saúde</span>
+  <a href="login.html" class="nav-link">Acessar sistema →</a>
+</nav>
 
-      <div class="field">
-        <label for="password">Senha</label>
-        <input id="password" type="password" placeholder="Digite sua senha" required />
-      </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="tag">Saúde Ocupacional</div>
 
-      <button class="btn btn-primary" type="submit">Entrar</button>
-    </form>
+  <h1>Cuide das pessoas.<br><span>Com precisão.</span></h1>
 
-    <p class="link">Não tem conta? Entre com: user@gmail.com / senha:123456 <a href="#">Solicitar acesso</a></p>
+  <p class="hero-sub">
+    Gerencie exames ocupacionais e afastamentos de forma simples, segura e eficiente.
+  </p>
+
+  <div class="hero-cta">
+    <a href="login.html" class="btn-main">Entrar no sistema</a>
+    <a href="#features" class="btn-outline">Saiba mais</a>
   </div>
 
-</body>
-</html>
+  <div class="scroll-hint">
+    <span>explorar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <p class="section-label reveal-el">Funcionalidades</p>
+  <h2 class="section-title reveal-el">Tudo que você precisa, sem complicação.</h2>
+
+  <div class="features-grid">
+    <div class="feature-card reveal-el">
+      <div class="feature-icon">🩺</div>
+      <div class="feature-title">Controle de Exames</div>
+      <div class="feature-desc">Cadastre, edite e acompanhe todos os exames ocupacionais com filtros, ordenação e exportação de dados.</div>
+    </div>
+
+    <div class="feature-card reveal-el" style="transition-delay:0.1s">
+      <div class="feature-icon">📋</div>
+      <div class="feature-title">Gestão de Afastamentos</div>
+      <div class="feature-desc">Registre afastamentos por doença, acidente ou outros motivos, com datas de início e previsão de retorno.</div>
+    </div>
+
+    <div class="feature-card reveal-el" style="transition-delay:0.2s">
+      <div class="feature-icon">🛡️</div>
+      <div class="feature-title">Ações Preventivas</div>
+      <div class="feature-desc">Documente as ações preventivas aplicadas para cada afastamento e construa um histórico de cuidado.</div>
+    </div>
+
+    <div class="feature-card reveal-el" style="transition-delay:0.3s">
+      <div class="feature-icon">📤</div>
+      <div class="feature-title">Importar e Exportar</div>
+      <div class="feature-desc">Faça backup dos dados em JSON com um clique, ou importe registros existentes com facilidade.</div>
+    </div>
+
+    <div class="feature-card reveal-el" style="transition-delay:0.4s">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">Acesso com Login</div>
+      <div class="feature-desc">Sistema protegido por autenticação. Apenas usuários autorizados da equipe de saúde acessam os dados.</div>
+    </div>
+
+    <div class="feature-card reveal-el" style="transition-delay:0.5s">
+      <div class="feature-icon">📱</div>
+      <div class="feature-title">Responsivo</div>
+      <div class="feature-desc">Interface adaptável para desktop, tablet e celular. Use onde e quando precisar.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA BOTTOM -->
+<div class="cta-section reveal-block">
+  <h2>Pronto para começar?</h2>
+  <p>Faça login e acesse o painel completo de saúde ocupacional.</p>
+  <a href="login.html" class="btn-main">Acessar agora →</a>
+</div>
+
+<footer>
+  © 2025 — Paixão e Saúde. Todos os direitos reservados.
+</footer>
 
 <script>
-/*
-  login.js - autenticação simples (sem back-end)
-  Em produção, nunca armazenar senhas assim.
-*/
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal-el');
+  const revealBlocks = document.querySelectorAll('.reveal-block');
 
-// Usuários de exemplo para o sistema de Saúde Ocupacional
-const demoUsers = [
-  { email: 'user@gmail.com',     password: '123456', name: 'Médico do Trabalho' },
-  { email: 'vito.uchoa@gmail.com', password: 'vitor123', name: 'Enfermeiro(a)' },
-  { email: 'rh@empresa.com',       password: 'gestao2025', name: 'Recursos Humanos' }
-];
+  function checkReveal() {
+    const wh = window.innerHeight;
 
-const form = document.getElementById('loginForm');
+    revealEls.forEach(el => {
+      if (el.getBoundingClientRect().top < wh - 80) {
+        el.classList.add('active');
+      }
+    });
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-
-  const email = document.getElementById('email').value.trim().toLowerCase();
-  const password = document.getElementById('password').value.trim();
-
-  if (!email || !password) {
-    alert('Preencha todos os campos.');
-    return;
+    revealBlocks.forEach(el => {
+      if (el.getBoundingClientRect().top < wh - 80) {
+        el.classList.add('active');
+      }
+    });
   }
 
-  const user = demoUsers.find(u => u.email === email && u.password === password);
+  // Feature cards também
+  document.querySelectorAll('.feature-card').forEach(card => {
+    revealEls.forEach = Array.prototype.forEach;
+  });
 
-  if (!user) {
-    alert('Credenciais inválidas.');
-    return;
-  }
-
-  // Criar sessão
-  const session = {
-    email: user.email,
-    name: user.name,
-    token: btoa(user.email + '|' + Date.now())
-  };
-
-  localStorage.setItem('saude_session', JSON.stringify(session));
-
-  // Redirecionar
-  window.location.href = 'login.html';
-});
+  window.addEventListener('scroll', checkReveal);
+  checkReveal();
 </script>
+</body>
+</html>

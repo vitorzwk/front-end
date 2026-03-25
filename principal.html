@@ -798,6 +798,14 @@ placeholder="Pesquisar funcionário, cargo ou tipo de exame">
 <input id="fileInput" type="file" accept="application/json" hidden>
 
 <script>
+// ===== VERIFICAÇÃO DE SESSÃO =====
+(function() {
+  const session = localStorage.getItem('saude_session');
+  if (!session) {
+    window.location.href = 'login.html';
+  }
+})();
+
 // ===== DADOS INICIAIS =====
 let users = [
   {

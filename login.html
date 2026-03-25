@@ -4,9 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - Paixão e Saúde.</title>
-<!--O :root seleciona o elemento raiz do documento (equivalente a html),
- e ali você define variáveis globais que podem ser usadas em qualquer lugar.Essa variável --radius provavelmente 
- será usada para arredondar cantos; O style importa ua fonte poppins diretamente da internet (google)-->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
@@ -40,23 +37,16 @@
       backdrop-filter: blur(12px);
       box-shadow: 0 8px 28px rgba(0,0,0,0.4);
       animation: fadeIn 0.8s ease;
-    } 
-/*O key frame cria uma pequena mudança de cor (mais claro) quando o user clica; Na posição original, sem deslocamento.*/
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    h1 {
-      font-size: 26px;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-
+    h1 { font-size: 26px; margin-bottom: 10px; font-weight: 600; }
     p { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
-
     .field { text-align: left; margin-bottom: 18px; }
-
     label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 6px; }
 
     input {
@@ -90,12 +80,7 @@
 
     .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
 
-    .link {
-      margin-top: 18px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
+    .link { margin-top: 18px; font-size: 13px; color: var(--muted); }
     .link a { color: var(--accent); text-decoration: none; }
     .link a:hover { text-decoration: underline; }
   </style>
@@ -120,31 +105,20 @@
       <button class="btn btn-primary" type="submit">Entrar</button>
     </form>
 
-    <p class="link">Não tem conta? Entre com: user@gmail.com / senha:123456 <a href="#">Solicitar acesso</a></p>
+    <p class="link">Entre com: user@gmail.com / senha: 123456 <a href="#">Solicitar acesso</a></p>
   </div>
 
-</body>
-</html>
-
 <script>
-/*
-  login.js - autenticação simples (sem back-end)
-  Em produção, nunca armazenar senhas assim.
-*/
-
-// Usuários de exemplo para o sistema de Saúde Ocupacional
 const demoUsers = [
-  { email: 'user@gmail.com',     password: '123456', name: 'Médico do Trabalho' },
-  { email: 'vito.uchoa@gmail.com', password: 'vitor123', name: 'Enfermeiro(a)' },
-  { email: 'rh@empresa.com',       password: 'gestao2025', name: 'Recursos Humanos' }
+  { email: 'user@gmail.com',        password: '123456',     name: 'Médico do Trabalho' },
+  { email: 'vito.uchoa@gmail.com',  password: 'vitor123',   name: 'Enfermeiro(a)' },
+  { email: 'rh@empresa.com',        password: 'gestao2025', name: 'Recursos Humanos' }
 ];
 
-const form = document.getElementById('loginForm');
-
-form.addEventListener('submit', (e) => {
+document.getElementById('loginForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  const email = document.getElementById('email').value.trim().toLowerCase();
+  const email    = document.getElementById('email').value.trim().toLowerCase();
   const password = document.getElementById('password').value.trim();
 
   if (!email || !password) {
@@ -168,7 +142,10 @@ form.addEventListener('submit', (e) => {
 
   localStorage.setItem('saude_session', JSON.stringify(session));
 
-  // Redirecionar
-  window.location.href = 'login.html';
+  // ✅ Redirecionar para a página principal
+  window.location.href = 'principal.html';
 });
 </script>
+
+</body>
+</html>
